@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -euxo pipefail
+
+source lib/create_service_account_cred.sh
+
+terraform destroy
+
+source lib/remove_service_account_cred.sh

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -euxo pipefail
+
+./remove_resources
+
+./remove_project_and_service_account
+
