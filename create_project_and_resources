@@ -1,0 +1,33 @@
+#!/bin/bash
+
+set -euxo pipefail
+
+export TF_VAR_project_id=shift-scheduler-"${RANDOM}"
+keyfile=~/.config/gcloud/terraform-admin.json
+
+gcloud auth login
+
+# Get the account ID like "71B5CC-6X99F1-D483A5"
+billing_account="$(gcloud beta billing accounts list | grep -oE "[0-9A-Z]{6}-[0-9A-Z]{6}-[0-9A-Z]{6}")"
+
+# Create a project to house all the resources 
+gcloud projects create "${TF_VAR_project_id}"
+gcloud beta billing projects link "${TF_VAR_project_id}" --billing-account "${billing_account}"
+
+#Create the Terraform service account
+gcloud iam service-accounts create terraform --display-name "Terraform admin account"
+gcloud iam service-accounts keys create ${keyfile} --iam-account terraform@${TF_VAR_project_id}.iam.gserviceaccount.com
+gcloud projects add-iam-policy-binding ${TF_VAR_project_id} --member serviceAccount:terraform@${TF_VAR_project_id}.iam.gserviceaccount.com --role roles/owner
+
+gcloud services enable cloudresourcemanager.googleapis.com
+gcloud services enable cloudbilling.googleapis.com
+gcloud services enable iam.googleapis.com
+gcloud services enable compute.googleapis.com
+gcloud services enable container.googleapis.com
+
+gcloud auth revoke
+
+# Terraform provisions resources
+cd resource-definitions && terraform init && terraform apply
+
+rm "${keyfile}"
