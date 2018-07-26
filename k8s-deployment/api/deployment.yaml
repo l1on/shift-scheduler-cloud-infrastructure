@@ -1,0 +1,20 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: shift-scheduler-api
+spec:
+  selector:
+    matchLabels:
+      app: shift-scheduler-api
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: shift-scheduler-api
+    spec:
+      containers:
+      - name: shift-scheduler-api
+        image: iluvzhouying/shift-scheduler-api:latest
+        env:
+          - name: PORT
+            value: "8080"
