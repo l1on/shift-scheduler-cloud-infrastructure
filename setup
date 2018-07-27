@@ -2,6 +2,8 @@
 
 set -euxo pipefail
 
-./create_project_and_service_account
+project_and_srv_accounts/create_project_and_service_account
 
-./create_resources
+kubernetes-cluster-resources/create_resources
+
+kubernetes-pkg-manager/install_tiller

@@ -2,7 +2,7 @@
 
 set -euxo pipefail
 
-./remove_resources
+kubernetes-cluster-resources/remove_resources
 
-./remove_project_and_service_account
+project_and_srv_accounts/remove_project_and_service_account
 
