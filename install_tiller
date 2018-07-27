@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -euxo pipefail
+
+source lib/create_service_account_cred.sh
+
+# TODO: needs to get cluster name, zone and project 
+gcloud container clusters get-credentials shift-scheduler --zone us-central1-a --project shift-scheduler-13956
+
+kubectl create -f k8s-deployment/tiller-rbac-config.yaml
+helm init --service-account tiller
+
+source lib/remove_service_account_cred.sh
