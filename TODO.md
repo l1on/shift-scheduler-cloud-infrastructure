@@ -13,4 +13,6 @@ In install_tiller, use # Get kube cluster access credentials from create_service
 
 change setup and teardown accordingly
 
+ set up terraform backend and boost machine type
+
 create a another folder called "create-automation-service-account" and write a script to automate the creation of service account, creation of service account key file and moving the file to shift-sheduler-deployment repo and then encryp it and possiably git commit and git push
