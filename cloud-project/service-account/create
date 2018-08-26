@@ -2,7 +2,7 @@
 
 set -euxo pipefail
 
-gcloud auth application-default login
+gcloud auth login
 
 source ../names.sh
 
@@ -14,7 +14,7 @@ gcloud iam service-accounts create ${SERVICE_ACCOUNT}
 gcloud projects add-iam-policy-binding ${project_id} --member serviceAccount:${SERVICE_ACCOUNT}@${project_id}.iam.gserviceaccount.com --role roles/container.developer
 gcloud iam service-accounts keys create ${account_keyfile} --iam-account ${SERVICE_ACCOUNT}@${project_id}.iam.gserviceaccount.com
 
-gcloud auth application-default revoke -q
+gcloud auth revoke -q
 
 
 cd ${deployment_repo_dir}

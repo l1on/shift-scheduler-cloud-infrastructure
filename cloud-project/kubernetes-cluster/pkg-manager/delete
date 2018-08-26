@@ -2,7 +2,7 @@
 
 set -euxo pipefail
 
-gcloud auth application-default login
+gcloud auth login
 
 source ../../names.sh
 
@@ -10,4 +10,4 @@ gcloud container clusters get-credentials ${TF_VAR_cluster_name} --zone ${TF_VAR
 
 helm reset
 
-gcloud auth application-default revoke -q
+gcloud auth revoke -q

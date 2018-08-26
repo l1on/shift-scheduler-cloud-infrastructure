@@ -2,8 +2,8 @@
 
 set -euxo pipefail
 
-gcloud auth application-default login
+gcloud auth login
 
 gcloud projects delete $(gcloud projects list  --format="csv[no-heading](PROJECT_ID)")
 
-gcloud auth application-default revoke -q
+gcloud auth revoke -q

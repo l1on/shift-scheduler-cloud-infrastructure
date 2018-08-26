@@ -2,7 +2,7 @@
 
 set -euxo pipefail
 
-gcloud auth application-default login
+gcloud auth login
 
 source names.sh
 
@@ -17,4 +17,4 @@ gcloud services enable iam.googleapis.com
 gcloud services enable compute.googleapis.com
 gcloud services enable container.googleapis.com
 
-gcloud auth application-default revoke -q
+gcloud auth revoke -q
