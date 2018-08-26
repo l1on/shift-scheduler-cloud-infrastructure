@@ -43,7 +43,7 @@ resource "google_container_cluster" "primary" {
 
     node_config {
       disk_size_gb = 10
-      machine_type = "f1-micro"
+      machine_type = "g1-small"
 
       oauth_scopes = [
         "https://www.googleapis.com/auth/compute",

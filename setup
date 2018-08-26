@@ -6,6 +6,6 @@ root_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd ${root_dir}/cloud-project && ./create 
 cd ${root_dir}/cloud-project/storage && ./create 
-cd ${root_dir}/cloud-project/service-account && ./create 
 cd ${root_dir}/cloud-project/kubernetes-cluster && ./create 
-cd ${root_dir}/cloud-project/kubernetes-cluster/pkg-manager && ./create 
+cd ${root_dir}/cloud-project/kubernetes-cluster/pkg-manager && ./create
+cd ${root_dir}/cloud-project/service-account && ./create 

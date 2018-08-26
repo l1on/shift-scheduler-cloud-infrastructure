@@ -7,13 +7,20 @@ gcloud auth application-default login
 source ../names.sh
 
 project_id=$(gcloud projects list  --format="csv[no-heading](PROJECT_ID)")
-account_keyfile=../../../shift-scheduler-deployment/${SERVICE_ACCOUNT}-key.json
+deployment_repo_dir=../../../shift-scheduler-deployment
+account_keyfile=${deployment_repo_dir}/${SERVICE_ACCOUNT}-key.json
 
 gcloud iam service-accounts create ${SERVICE_ACCOUNT}
 gcloud projects add-iam-policy-binding ${project_id} --member serviceAccount:${SERVICE_ACCOUNT}@${project_id}.iam.gserviceaccount.com --role roles/container.developer
-
 gcloud iam service-accounts keys create ${account_keyfile} --iam-account ${SERVICE_ACCOUNT}@${project_id}.iam.gserviceaccount.com
 
-
-
 gcloud auth application-default revoke -q
+
+
+cd ${deployment_repo_dir}
+travis login --org
+travis encrypt-file ${SERVICE_ACCOUNT}-key.json --add
+rm ${SERVICE_ACCOUNT}-key.json
+git add ${SERVICE_ACCOUNT}-key.json.enc
+git commit -m "Changed deploy service account."
+git push
