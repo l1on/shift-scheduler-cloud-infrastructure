@@ -1,11 +1,32 @@
-variable "project_id" {}
+variable "project_id" {
+  type = "string"
+}
+
+variable "cluster_name" {
+  type = "string"
+}
+
+variable "cluster_zone" {
+  type = "string"
+}
+
+variable "bucket_name" {
+  type = "string"
+}
+
+
+terraform {
+  backend "gcs" {
+    bucket  = "${var.bucket_name}"
+  }
+}
 
 provider "google" {}
 
 resource "google_container_cluster" "primary" {
-  name    = "shift-scheduler"
+  name    = "${var.cluster_name}"
   project = "${var.project_id}"
-  zone    = "us-central1-a"
+  zone    = "${var.cluster_zone}"
 
   node_pool {
     initial_node_count = 3

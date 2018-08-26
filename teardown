@@ -2,7 +2,7 @@
 
 set -euxo pipefail
 
-kubernetes-cluster-resources/remove_resources
+root_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-project_and_srv_accounts/remove_project_and_service_account
-
+cd ${root_dir}/cloud-project/kubernetes-cluster && ./delete 
+cd ${root_dir}/cloud-project && ./delete 

@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -euxo pipefail
+
+gcloud auth application-default login
+
+source ../names.sh
+
+project_id=$(gcloud projects list  --format="csv[no-heading](PROJECT_ID)")
+account_keyfile=../../../shift-scheduler-deployment/${SERVICE_ACCOUNT}-key.json
+
+gcloud iam service-accounts create ${SERVICE_ACCOUNT}
+gcloud projects add-iam-policy-binding ${project_id} --member serviceAccount:${SERVICE_ACCOUNT}@${project_id}.iam.gserviceaccount.com --role roles/container.developer
+
+gcloud iam service-accounts keys create ${account_keyfile} --iam-account ${SERVICE_ACCOUNT}@${project_id}.iam.gserviceaccount.com
+
+
+
+gcloud auth application-default revoke -q

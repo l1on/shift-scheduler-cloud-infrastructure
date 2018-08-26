@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -euxo pipefail
+
+gcloud auth application-default login
+
+source ../names.sh
+
+encrypted_account_keyfile=../../../shift-scheduler-deployment/${SERVICE_ACCOUNT}-account.json.enc
+rm ${encrypted_account_keyfile}
+
+gcloud iam service-accounts delete ${SERVICE_ACCOUNT}@$(gcloud projects list  --format="csv[no-heading](PROJECT_ID)").iam.gserviceaccount.com
+
+gcloud auth application-default revoke -q

@@ -2,8 +2,10 @@
 
 set -euxo pipefail
 
-project_and_srv_accounts/create_project_and_service_account
+root_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-kubernetes-cluster-resources/create_resources
-
-kubernetes-pkg-manager/install_tiller
+cd ${root_dir}/cloud-project && ./create 
+cd ${root_dir}/cloud-project/storage && ./create 
+cd ${root_dir}/cloud-project/service-account && ./create 
+cd ${root_dir}/cloud-project/kubernetes-cluster && ./create 
+cd ${root_dir}/cloud-project/kubernetes-cluster/pkg-manager && ./create 

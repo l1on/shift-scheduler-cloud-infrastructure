@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -euxo pipefail
+
+gcloud auth application-default login
+
+source ../names.sh
+
+gsutil rm -r gs://${BUCKET}
+
+gcloud auth application-default revoke -q
