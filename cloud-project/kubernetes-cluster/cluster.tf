@@ -10,14 +10,9 @@ variable "cluster_zone" {
   type = "string"
 }
 
-variable "bucket_name" {
-  type = "string"
-}
-
-
 terraform {
   backend "gcs" {
-    bucket  = "${var.bucket_name}"
+    bucket  = "shift-scheduler-terraform-state"
   }
 }
 
