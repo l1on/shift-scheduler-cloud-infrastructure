@@ -2,20 +2,20 @@
 
 set -euxo pipefail
 
-root_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
 export BASH_AUTH_REVOKE=false
 export TF_AUTH_REVOKE=false 
 export BASH_AUTH_INVOKE=true
 export TF_AUTH_INVOKE=true 
 
-cd ${root_dir}/cloud-project && ./create
+cd ${script_dir}/cloud-project && ./create
 export BASH_AUTH_INVOKE=false
-cd ${root_dir}/cloud-project/storage && ./create
-cd ${root_dir}/cloud-project/ip && ./create
+cd ${script_dir}/cloud-project/storage && ./create
+cd ${script_dir}/cloud-project/ip && ./create
 export TF_AUTH_INVOKE=false
-cd ${root_dir}/cloud-project/kubernetes-cluster && ./create 
-cd ${root_dir}/cloud-project/kubernetes-cluster/pkg-manager && ./create
+cd ${script_dir}/cloud-project/kubernetes-cluster && ./create 
+cd ${script_dir}/cloud-project/kubernetes-cluster/pkg-manager && ./create
 export BASH_AUTH_REVOKE=true
 export TF_AUTH_REVOKE=true 
-cd ${root_dir}/cloud-project/service-account && ./create 
+cd ${script_dir}/cloud-project/service-account && ./create 
