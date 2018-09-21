@@ -44,11 +44,11 @@ resource "google_service_account_key" "ci_deploy_key" {
     }
 
     command = <<EOF
-      echo ${KEY} >> ${TF_VAR_service_account}-key.json
+      echo $${KEY} >> $${TF_VAR_service_account}-key.json
       travis login --org
-      travis encrypt-file ${TF_VAR_service_account}-key.json --add
-      rm ${TF_VAR_service_account}-key.json
-      git add ${TF_VAR_service_account}-key.json.enc
+      travis encrypt-file $${TF_VAR_service_account}-key.json --add
+      rm $${TF_VAR_service_account}-key.json
+      git add $${TF_VAR_service_account}-key.json.enc
       git commit -m "Changed deploy service account."
       git push
     EOF

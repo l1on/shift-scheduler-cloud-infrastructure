@@ -5,5 +5,6 @@ export TF_VAR_project_id="$(gcloud projects list --format="csv[no-heading](PROJE
 source ${script_dir}/bash-logout.sh
 
 source ${script_dir}/tf-login.sh
+source ${script_dir}/names.sh
 terraform init && terraform apply -auto-approve
 source ${script_dir}/tf-logout.sh

@@ -12,10 +12,9 @@ export TF_AUTH_INVOKE=true
 cd ${script_dir}/cloud-project && ./create
 export BASH_AUTH_INVOKE=false
 cd ${script_dir}/cloud-project/storage && ./create
-cd ${script_dir}/cloud-project/ip && ./create
-export TF_AUTH_INVOKE=false
-cd ${script_dir}/cloud-project/kubernetes-cluster && ./create 
-cd ${script_dir}/cloud-project/kubernetes-cluster/pkg-manager && ./create
-export BASH_AUTH_REVOKE=true
-export TF_AUTH_REVOKE=true 
 cd ${script_dir}/cloud-project/service-account && ./create 
+export TF_AUTH_INVOKE=false
+export TF_AUTH_REVOKE=true 
+cd ${script_dir}/cloud-project/kubernetes-cluster && ./create 
+export BASH_AUTH_REVOKE=true
+cd ${script_dir}/cloud-project/kubernetes-cluster/pkg-manager && ./create
