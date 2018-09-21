@@ -4,9 +4,21 @@ set -euxo pipefail
 
 gcloud auth login
 
-source ../names.sh
+source ../../lib/names.sh
 
-gsutil mb -p $(gcloud projects list  --format="csv[no-heading](PROJECT_ID)") gs://${BUCKET}
+project_id=$(gcloud projects list  --format="csv[no-heading](PROJECT_ID)")
+bucket=${project_id}-terraform-state
+
+gsutil mb -p ${project_id} gs://${bucket}
 
 gcloud auth revoke -q
 
+declare -a files=("../service-account/service_account.tf" "../service-account/account-role/main.tf" "../kubernetes-cluster/cluster.tf" "../ip/ip.tf")
+
+for file in "${files[@]}"
+do 
+    sed 's/shift-scheduler-[0-9]\{0,5\}-terraform-state/'${bucket}'/' ${file} | tee ${file}
+    git add ${file}
+    git commit -m "Changed bucket name as a result of an auto created bucket."
+    git push
+done
