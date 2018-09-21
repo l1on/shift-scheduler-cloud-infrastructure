@@ -12,7 +12,7 @@ variable "cluster_zone" {
 
 terraform {
   backend "gcs" {
-    bucket  = "shift-scheduler-23194-terraform-state"
+    bucket  = "shift-scheduler-19195-terraform-state"
   }
 }
 
