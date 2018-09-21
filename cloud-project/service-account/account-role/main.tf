@@ -2,13 +2,14 @@ variable "role" {
   type = "string"
 }
 
-variable "id" {
-  type = "string"
-}
-
 variable "email" {
   type = "string"
 }
+
+variable "project" {
+  type = "string"
+}
+
 
 terraform {
   backend "gcs" {
@@ -19,7 +20,7 @@ terraform {
 provider "google" {}
 
 resource "google_service_account_iam_binding" "account_role" {
-  service_account_id = "${var.id}"
+  service_account_id = "projects/${var.project}/serviceAccounts/${var.email}"
   role = "${var.role}"
 
   members = [

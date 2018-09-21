@@ -22,21 +22,21 @@ module "ci_account_k8s_deployer" {
   source = "./account-role"
 
   role = "roles/container.developer"
-  id = "${google_service_account.ci_account.email}"
   email = "${google_service_account.ci_account.email}"
+  project = "${var.project_id}"
 }
 
 module "ci_account_ip_viewer" {
   source = "./account-role"
 
   role = "roles/compute.viewer"
-  id = "${google_service_account.ci_account.email}"
   email = "${google_service_account.ci_account.email}"
+  project = "${var.project_id}"
 }
 
 resource "google_service_account_key" "ci_deploy_key" {
   service_account_id = "${google_service_account.ci_account.unique_id}"
-
+  project = "${var.project_id}"
   provisioner "local-exec" {
     working_dir = "../../../shift-scheduler-deployment"
     environment {
