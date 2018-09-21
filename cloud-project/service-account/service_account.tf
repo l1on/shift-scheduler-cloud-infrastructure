@@ -7,7 +7,7 @@ variable "service_account" {
 
 terraform {
   backend "gcs" {
-    bucket  = "shift-scheduler-20514-terraform-state"
+    bucket  = "shift-scheduler-15799-terraform-state"
   }
 }
 
@@ -44,11 +44,11 @@ resource "google_service_account_key" "ci_deploy_key" {
     }
 
     command = <<EOF
-      echo $${KEY} >> $${TF_VAR_service_account}-key.json
+      echo $KEY >> ${var.service_account}-key.json
       travis login --org
-      travis encrypt-file $${TF_VAR_service_account}-key.json --add
-      rm $${TF_VAR_service_account}-key.json
-      git add $${TF_VAR_service_account}-key.json.enc
+      travis encrypt-file ${var.service_account}-key.json --add
+      rm ${var.service_account}-key.json
+      git add ${var.service_account}-key.json.enc
       git commit -m "Changed deploy service account."
       git push
     EOF
@@ -59,8 +59,8 @@ resource "google_service_account_key" "ci_deploy_key" {
     working_dir = "../../../shift-scheduler-deployment"
 
     command = <<EOF
-      rm ${TF_VAR_service_account}-key.json.enc
-      git add ${TF_VAR_service_account}-key.json.enc
+      rm ${var.service_account}-key.json.enc
+      git add ${var.service_account}-key.json.enc
       git commit -m "Deleted deploy service account."
       git push
     EOF
