@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
-    bucket  = "shift-scheduler-00000-terraform-state"
+    bucket  = "shift-scheduler-23369-terraform-state"
   }
 }
 
@@ -14,7 +14,8 @@ resource "google_compute_address" "ip" {
     working_dir = "../../../shift-scheduler-app"
 
     command = <<EOF
-      sed 's/[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}/${google_compute_address.ip.address}/' public/_redirects | tee public/_redirects
+      sed 's/[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}/${google_compute_address.ip.address}/' public/_redirects > public/_redirects.bk
+      mv public/_redirects.bk public/_redirects
       git add public/_redirects
       git commit -m "Changed load balancer IP for the cluster."
       git push
