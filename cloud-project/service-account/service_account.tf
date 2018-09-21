@@ -22,7 +22,7 @@ module "ci_account_k8s_deployer" {
   source = "./account-role"
 
   role = "roles/container.developer"
-  id = "${google_service_account.ci_account.unique_id}"
+  id = "${google_service_account.ci_account.email}"
   email = "${google_service_account.ci_account.email}"
 }
 
@@ -30,7 +30,7 @@ module "ci_account_ip_viewer" {
   source = "./account-role"
 
   role = "roles/compute.viewer"
-  id = "${google_service_account.ci_account.unique_id}"
+  id = "${google_service_account.ci_account.email}"
   email = "${google_service_account.ci_account.email}"
 }
 
