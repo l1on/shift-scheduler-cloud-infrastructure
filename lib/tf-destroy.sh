@@ -6,5 +6,5 @@ source ${script_dir}/bash-logout.sh
 
 source ${script_dir}/tf-login.sh
 source ${script_dir}/names.sh
-terraform init && terraform destroy
+terraform init -upgrade && terraform destroy
 source ${script_dir}/tf-logout.sh

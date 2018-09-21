@@ -6,5 +6,5 @@ source ${script_dir}/bash-logout.sh
 
 source ${script_dir}/tf-login.sh
 source ${script_dir}/names.sh
-terraform init && terraform apply -auto-approve
+terraform init -upgrade && terraform apply -auto-approve
 source ${script_dir}/tf-logout.sh
