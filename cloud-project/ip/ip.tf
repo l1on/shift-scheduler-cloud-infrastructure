@@ -4,7 +4,7 @@ variable "project_id" {
 
 terraform {
   backend "gcs" {
-    bucket  = "shift-scheduler-30571-terraform-state"
+    bucket  = "shift-scheduler-11959-terraform-state"
   }
 }
 
