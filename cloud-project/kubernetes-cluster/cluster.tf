@@ -16,7 +16,7 @@ variable "ip_region" {
 
 terraform {
   backend "gcs" {
-    bucket  = "shift-scheduler-15799-terraform-state"
+    bucket  = "shift-scheduler-4627-terraform-state"
   }
 }
 
