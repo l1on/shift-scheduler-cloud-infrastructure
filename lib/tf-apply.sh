@@ -3,5 +3,5 @@ export TF_VAR_project_id="$(gcloud projects list --format="csv[no-heading](PROJE
 gcloud auth revoke -q
 
 gcloud auth application-default login
-terraform init && terraform apply
+terraform init && terraform apply -auto-approve
 gcloud auth application-default revoke -q
