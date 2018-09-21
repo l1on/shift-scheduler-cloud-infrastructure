@@ -17,8 +17,8 @@ declare -a files=("../service-account/service_account.tf" "../service-account/ac
 
 for file in "${files[@]}"
 do 
-    sed 's/shift-scheduler-[0-9]\{0,5\}-terraform-state/'${bucket}'/' ${file} | tee ${file}
+    sed 's/shift-scheduler-[0-9]\{1,5\}-terraform-state/'${bucket}'/' ${file} | tee ${file}
     git add ${file}
     git commit -m "Changed bucket name as a result of an auto created bucket."
-    git push
+    #git push
 done
