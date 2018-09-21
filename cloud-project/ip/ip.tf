@@ -2,6 +2,10 @@ variable "project_id" {
   type = "string"
 }
 
+variable "ip_region" {
+  type = "string"
+}
+
 terraform {
   backend "gcs" {
     bucket  = "shift-scheduler-11959-terraform-state"
@@ -13,6 +17,7 @@ provider "google" {}
 resource "google_compute_address" "ip" {
   name = "load-balancer-ip"
   project = "${var.project_id}"
+  region = "${var.ip_region}"
 
   provisioner "local-exec" {
     working_dir = "../../../shift-scheduler-app"
