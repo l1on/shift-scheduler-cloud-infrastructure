@@ -4,9 +4,18 @@ set -euxo pipefail
 
 root_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-cd ${root_dir}/cloud-project && ./create 
-cd ${root_dir}/cloud-project/storage && ./create 
-cd ${root_dir}/cloud-project/ip && ./create 
+export BASH_AUTH_REVOKE=false
+export TF_AUTH_REVOKE=false 
+export BASH_AUTH_INVOKE=true
+export TF_AUTH_INVOKE=true 
+
+cd ${root_dir}/cloud-project && ./create
+$BASH_AUTH_INVOKE=false
+cd ${root_dir}/cloud-project/storage && ./create
+cd ${root_dir}/cloud-project/ip && ./create
+$TF_AUTH_INVOKE=false
 cd ${root_dir}/cloud-project/kubernetes-cluster && ./create 
 cd ${root_dir}/cloud-project/kubernetes-cluster/pkg-manager && ./create
+$BASH_AUTH_REVOKE=true
+$TF_AUTH_REVOKE=true 
 cd ${root_dir}/cloud-project/service-account && ./create 

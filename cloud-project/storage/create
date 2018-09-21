@@ -2,14 +2,14 @@
 
 set -euxo pipefail
 
-gcloud auth login
+source ../../lib/bash-login.sh
 
 project_id=$(gcloud projects list  --format="csv[no-heading](PROJECT_ID)")
 bucket=${project_id}-terraform-state
 
 gsutil mb -p ${project_id} gs://${bucket}
 
-gcloud auth revoke -q
+source ../../lib/bash-logout.sh
 
 declare -a files=("../service-account/service_account.tf" "../service-account/account-role/main.tf" "../kubernetes-cluster/cluster.tf" "../ip/ip.tf")
 

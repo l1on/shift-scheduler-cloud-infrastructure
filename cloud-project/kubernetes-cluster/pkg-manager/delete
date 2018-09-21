@@ -2,7 +2,7 @@
 
 set -euxo pipefail
 
-gcloud auth login
+source ../../../lib/bash-login.sh
 
 source ../../../lib/names.sh
 
@@ -10,4 +10,4 @@ gcloud container clusters get-credentials ${TF_VAR_cluster_name} --zone ${TF_VAR
 
 helm reset
 
-gcloud auth revoke -q
+source ../../../lib/bash-logout.sh
