@@ -7,7 +7,7 @@ variable "service_account" {
 
 terraform {
   backend "gcs" {
-    bucket  = "shift-scheduler-6074-terraform-state"
+    bucket  = "shift-scheduler-30571-terraform-state"
   }
 }
 
