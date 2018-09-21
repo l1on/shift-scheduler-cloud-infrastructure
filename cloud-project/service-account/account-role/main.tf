@@ -12,7 +12,7 @@ variable "email" {
 
 terraform {
   backend "gcs" {
-    bucket  = "shift-scheduler-terraform-state"
+    bucket  = "shift-scheduler-00000-terraform-state"
   }
 }
 
