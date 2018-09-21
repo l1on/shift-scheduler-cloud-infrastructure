@@ -2,4 +2,5 @@
 
 set -euxo pipefail
 
+source ../../lib/names.sh
 source ../../lib/tf-destroy.sh
