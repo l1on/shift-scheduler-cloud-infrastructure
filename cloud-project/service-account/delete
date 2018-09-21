@@ -2,19 +2,5 @@
 
 set -euxo pipefail
 
-gcloud auth login
-
-source ../names.sh
-
-gcloud iam service-accounts delete ${SERVICE_ACCOUNT}@$(gcloud projects list  --format="csv[no-heading](PROJECT_ID)").iam.gserviceaccount.com
-
-gcloud auth revoke -q
-
-deployment_repo_dir=../../../shift-scheduler-deployment
-cd ${deployment_repo_dir}
-rm ${SERVICE_ACCOUNT}-key.json.enc
-git add ${SERVICE_ACCOUNT}-key.json.enc
-git commit -m "Deleted deploy service account."
-git push
-
-
+source ../../lib/names.sh
+source ../../lib/tf-destroy.sh
