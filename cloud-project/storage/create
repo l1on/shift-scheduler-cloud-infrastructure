@@ -11,7 +11,7 @@ gsutil mb -p ${project_id} gs://${bucket}
 
 source ../../lib/bash-logout.sh
 
-declare -a files=("../service-account/service_account.tf" "../service-account/account-role/main.tf" "../kubernetes-cluster/cluster.tf")
+declare -a files=("../service-account/service_account.tf" "../kubernetes-cluster/cluster.tf")
 
 for file in "${files[@]}"
 do 
