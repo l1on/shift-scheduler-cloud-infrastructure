@@ -19,5 +19,5 @@ do
     mv ${file}.bk ${file}
     git add ${file}
     git commit -m "Changed bucket name as a result of an auto created bucket."
-    #git push
+    git push
 done

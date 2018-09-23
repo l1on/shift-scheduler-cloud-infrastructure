@@ -4,9 +4,14 @@ set -euxo pipefail
 
 script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
+export BASH_AUTH_REVOKE=false
+export TF_AUTH_REVOKE=false 
 export BASH_AUTH_INVOKE=true
-export BASH_AUTH_REVOKE=true
+export TF_AUTH_INVOKE=true 
 
-cd ${script_dir}/cloud-project/storage && ./delete 
-cd ${script_dir}/cloud-project/kubernetes-cluster && rm .terraform/terraform.tfstate 2> /dev/null  
-cd ${script_dir}/cloud-project/service-account && rm .terraform/terraform.tfstate 2> /dev/null 
+cd ${script_dir}/cloud-project/service-account && ./delete
+export BASH_AUTH_INVOKE=false
+export TF_AUTH_INVOKE=false 
+export TF_AUTH_REVOKE=true
+export BASH_AUTH_REVOKE=true 
+cd ${script_dir}/cloud-project/kubernetes-cluster && ./delete
