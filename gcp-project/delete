@@ -2,8 +2,4 @@
 
 set -euxo pipefail
 
-source ../lib/bash-login.sh
-
 gcloud projects delete $(gcloud projects list  --format="csv[no-heading](PROJECT_ID)")
-
-source ../lib/bash-logout.sh

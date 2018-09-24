@@ -4,10 +4,11 @@ set -euxo pipefail
 
 script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
-export BASH_AUTH_INVOKE=true
-export BASH_AUTH_REVOKE=false
+source ${script_dir}/lib/names.sh
+
+gcloud auth login
 
 cd ${script_dir}/cloud-project && ./create
-export BASH_AUTH_INVOKE=false
-export BASH_AUTH_REVOKE=true
 cd ${script_dir}/cloud-project/storage && ./create
+
+gcloud auth revoke -q

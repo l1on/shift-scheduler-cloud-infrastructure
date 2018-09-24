@@ -9,18 +9,25 @@ provider "google" {
 }
 
 ###############################################################################
+# Load GCP project name
+###############################################################################
+data "external" "project" {
+  program = ["jq", "-n", "--arg", "project_id", "$(gcloud projects list --format='csv[no-heading](PROJECT_ID)')", "'{project_id:$project_id}'"]
+}
+
+###############################################################################
 # GCP Kubernetes Load Balancer IP
 ###############################################################################
-resource "google_compute_address" "ip" {
+resource "google_compute_address" "load_balancer_ip" {
   name = "load-balancer-ip"
-  project = "${var.project_id}"
+  project = "${data.external.project.result.project_id}"
   region = "${var.ip_region}"
 
   provisioner "local-exec" {
     working_dir = "../../../shift-scheduler-app"
 
     command = <<EOF
-      sed 's/[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}/${google_compute_address.ip.address}/' public/_redirects > public/_redirects.bk
+      sed 's/[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}/${google_compute_address.load_balancer_ip.address}/' public/_redirects > public/_redirects.bk
       mv public/_redirects.bk public/_redirects
       git add public/_redirects
       git commit -m "Changed load balancer IP for the cluster."
@@ -28,17 +35,17 @@ resource "google_compute_address" "ip" {
     EOF
   }
 
-    provisioner "local-exec" {
-      when = "destroy"
-      working_dir = "../../../shift-scheduler-app"
+  provisioner "local-exec" {
+    when = "destroy"
+    working_dir = "../../../shift-scheduler-app"
 
-      command = <<EOF
-        sed 's/[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}/0.0.0.0/' public/_redirects | tee public/_redirects
-        git add public/_redirects
-        git commit -m "Removed load balancer IP for the cluster."
-        git push
-      EOF
-    }
+    command = <<EOF
+      sed 's/[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}/0.0.0.0/' public/_redirects | tee public/_redirects
+      git add public/_redirects
+      git commit -m "Removed load balancer IP for the cluster."
+      git push
+    EOF
+  }
 }
 
 ###############################################################################
@@ -46,7 +53,7 @@ resource "google_compute_address" "ip" {
 ###############################################################################
 resource "google_container_cluster" "primary" {
   name    = "${var.cluster_name}"
-  project = "${var.project_id}"
+  project = "${data.external.project.result.project_id}"
   zone    = "${var.cluster_zone}"
 
   node_pool {
@@ -91,11 +98,11 @@ resource "google_container_cluster" "primary" {
 ###############################################################################
 resource "google_service_account" "ci_account" {
   account_id = "${var.service_account}"
-  project = "${var.project_id}"
+  project = "${data.external.project.result.project_id}"
 }
 
 resource "google_project_iam_policy" "account_role" {
-  project     = "${var.project_id}"
+  project = "${data.external.project.result.project_id}"
   policy_data = "${data.google_iam_policy.account_role.policy_data}"
 }
 
@@ -121,8 +128,8 @@ data "google_iam_policy" "account_role" {
 resource "google_service_account_key" "ci_deploy_key" {
   service_account_id = "${google_service_account.ci_account.unique_id}"
 
-  depends_on = ["google_container_cluster.primary"]
-  
+  depends_on = ["google_container_cluster.primary", "google_compute_address.load_balancer_ip", "google_project_iam_policy.account_role"]
+
   provisioner "local-exec" {
     working_dir = "../../../shift-scheduler-deployment"
     environment {

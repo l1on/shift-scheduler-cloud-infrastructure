@@ -2,7 +2,6 @@
 
 set -euxo pipefail
 
-source ../lib/bash-login.sh
 source ../lib/names.sh
 
 # $RANDOM is an internal Bash function (not a constant) that returns a pseudorandom integer in the range 0 - 32767
@@ -15,5 +14,3 @@ gcloud services enable cloudbilling.googleapis.com
 gcloud services enable iam.googleapis.com
 gcloud services enable compute.googleapis.com
 gcloud services enable container.googleapis.com
-
-source ../lib/bash-logout.sh

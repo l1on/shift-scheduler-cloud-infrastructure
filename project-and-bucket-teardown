@@ -4,8 +4,9 @@ set -euxo pipefail
 
 script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
-export BASH_AUTH_REVOKE=true
-export BASH_AUTH_INVOKE=true
+gcloud auth login
 
 cd ${script_dir}/cloud-project && ./delete 
 cd ${script_dir}/cloud-project/terraform && rm .terraform/terraform.tfstate 2> /dev/null  
+
+gcloud auth revoke -q
