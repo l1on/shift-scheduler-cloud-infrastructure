@@ -137,7 +137,7 @@ resource "google_service_account_key" "ci_deploy_key" {
     }
 
     command = <<EOF
-      echo "$KEY" >> ${var.service_account}-key.json
+      printf "%s" "$KEY" > ${var.service_account}-key.json
       travis login --org --auto
       travis encrypt-file ${var.service_account}-key.json --force --add
       rm ${var.service_account}-key.json

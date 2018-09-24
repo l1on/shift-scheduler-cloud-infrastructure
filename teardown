@@ -6,10 +6,8 @@ script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
 source "${script_dir}"/lib/names.sh
 
-gcloud auth login
-gcloud auth application-default login
+gcloud auth login && gcloud auth application-default login
 
 cd "${script_dir}"/gcp-project/terraform && ./delete
 
-gcloud auth application-default revoke -q
-gcloud auth revoke -q
+gcloud auth application-default revoke -q && gcloud auth revoke -q
