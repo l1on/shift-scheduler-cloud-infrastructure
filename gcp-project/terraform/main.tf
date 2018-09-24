@@ -132,9 +132,12 @@ resource "google_service_account_key" "ci_deploy_key" {
 
   provisioner "local-exec" {
     working_dir = "../../../shift-scheduler-deployment"
+    environment {
+      KEY = "${base64decode(google_service_account_key.ci_deploy_key.private_key)}"
+    }
 
     command = <<EOF
-      echo ${base64decode(google_service_account_key.ci_deploy_key.private_key)} | xargs | sed -e 's/ //g' >> ${var.service_account}-key.json
+      echo "$KEY" >> ${var.service_account}-key.json
       travis login --org --auto
       travis encrypt-file ${var.service_account}-key.json --force --add
       rm ${var.service_account}-key.json

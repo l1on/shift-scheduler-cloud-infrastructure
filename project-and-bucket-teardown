@@ -6,7 +6,7 @@ script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
 gcloud auth login
 
-cd ${script_dir}/gcp-project && ./delete 
-cd ${script_dir}/gcp-project/terraform && rm .terraform/terraform.tfstate 2> /dev/null  
+cd "${script_dir}"/gcp-project && ./delete 
+cd "${script_dir}"/gcp-project/terraform && rm .terraform/terraform.tfstate 2> /dev/null  
 
 gcloud auth revoke -q

@@ -2,15 +2,15 @@
 
 set -euxo pipefail
 
-gsutil rm -r gs://$(gcloud projects list --format="csv[no-heading](PROJECT_ID)")-terraform-state
+gsutil rm -r gs://"$(gcloud projects list --format="csv[no-heading](PROJECT_ID)")"-terraform-state
 
 declare -a files=("../terraform/main.tf")
 
 for file in "${files[@]}"
 do 
-    sed 's/shift-scheduler-[0-9]\{1,5\}-terraform-state/shift-scheduler-00000-terraform-state/' ${file} > ${file}.bk
-    mv ${file}.bk ${file}
-    git add ${file}
+    sed 's/shift-scheduler-[0-9]\{1,5\}-terraform-state/shift-scheduler-00000-terraform-state/' "${file}" > "${file}".bk
+    mv "${file}".bk "${file}"
+    git add "${file}"
     git commit -m "Reset bucket name as a result of the auto removal of the bucket."
     git push
 done

@@ -5,9 +5,9 @@ set -euxo pipefail
 source ../lib/names.sh
 
 # $RANDOM is an internal Bash function (not a constant) that returns a pseudorandom integer in the range 0 - 32767
-project_id=${PROJECT_ROOT}-${RANDOM}
-gcloud projects create ${project_id} --set-as-default
-gcloud beta billing projects link ${project_id} --billing-account $(gcloud beta billing accounts list --format="csv[no-heading](ACCOUNT_ID)")
+project_id="${PROJECT_ROOT}"-"${RANDOM}"
+gcloud projects create "${project_id}" --set-as-default
+gcloud beta billing projects link "${project_id}" --billing-account "$(gcloud beta billing accounts list --format="csv[no-heading](ACCOUNT_ID)")"
 
 gcloud services enable cloudresourcemanager.googleapis.com
 gcloud services enable cloudbilling.googleapis.com

@@ -2,18 +2,18 @@
 
 set -euxo pipefail
 
-project_id=$(gcloud projects list --format="csv[no-heading](PROJECT_ID)")
-bucket=${project_id}-terraform-state
+project_id="$(gcloud projects list --format="csv[no-heading](PROJECT_ID)")"
+bucket="${project_id}"-terraform-state
 
-gsutil mb -p ${project_id} gs://${bucket}
+gsutil mb -p "${project_id}" gs://"${bucket}"
 
 declare -a files=("../terraform/main.tf")
 
 for file in "${files[@]}"
 do 
-    sed 's/shift-scheduler-[0-9]\{1,5\}-terraform-state/'${bucket}'/' ${file} > ${file}.bk
-    mv ${file}.bk ${file}
-    git add ${file}
+    sed 's/shift-scheduler-[0-9]\{1,5\}-terraform-state/'"${bucket}"'/' "${file}" > "${file}".bk
+    mv "${file}".bk "${file}"
+    git add "${file}"
     git commit -m "Changed bucket name as a result of an auto created bucket."
     git push
 done

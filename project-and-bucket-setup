@@ -4,11 +4,11 @@ set -euxo pipefail
 
 script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
-source ${script_dir}/lib/names.sh
+source "${script_dir}"/lib/names.sh
 
 gcloud auth login
 
-cd ${script_dir}/gcp-project && ./create
-cd ${script_dir}/gcp-project/storage && ./create
+cd "${script_dir}"/gcp-project && ./create
+cd "${script_dir}"/gcp-project/storage && ./create
 
 gcloud auth revoke -q

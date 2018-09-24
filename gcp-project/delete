@@ -2,4 +2,4 @@
 
 set -euxo pipefail
 
-gcloud projects delete $(gcloud projects list  --format="csv[no-heading](PROJECT_ID)")
+gcloud projects delete "$(gcloud projects list  --format="csv[no-heading](PROJECT_ID)")"
