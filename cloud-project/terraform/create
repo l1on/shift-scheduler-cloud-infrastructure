@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -euxo pipefail
+
+source ../../lib/names.sh
+source ../../lib/tf-apply.sh

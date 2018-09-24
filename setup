@@ -12,4 +12,4 @@ export TF_AUTH_INVOKE=true
 cd ${script_dir}/cloud-project/terraform && ./create 
 export BASH_AUTH_INVOKE=false
 export BASH_AUTH_REVOKE=true
-cd ${script_dir}/cloud-project/kubernetes-cluster/pkg-manager && ./create
+cd ${script_dir}/cloud-project/terraform/k8s-pkg-manager && ./create
