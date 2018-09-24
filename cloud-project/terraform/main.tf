@@ -74,6 +74,16 @@ resource "google_container_cluster" "primary" {
       ]
     }
   }
+
+  provisioner "local-exec" {
+    command = <<EOF
+      gcloud container clusters get-credentials ${google_container_cluster.primary.name} \
+        --zone ${google_container_cluster.primary.zone} \
+        --project ${google_container_cluster.primary.project}
+      kubectl create -f tiller-rbac-config.yaml
+      helm init --service-account tiller
+    EOF
+  }
 }
 
 ###############################################################################
@@ -111,6 +121,8 @@ data "google_iam_policy" "account_role" {
 resource "google_service_account_key" "ci_deploy_key" {
   service_account_id = "${google_service_account.ci_account.unique_id}"
 
+  depends_on = ["google_container_cluster.primary"]
+  
   provisioner "local-exec" {
     working_dir = "../../../shift-scheduler-deployment"
     environment {

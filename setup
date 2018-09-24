@@ -4,12 +4,9 @@ set -euxo pipefail
 
 script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
-export BASH_AUTH_REVOKE=false
+export BASH_AUTH_REVOKE=true
 export TF_AUTH_REVOKE=true 
 export BASH_AUTH_INVOKE=true
 export TF_AUTH_INVOKE=true 
 
-cd ${script_dir}/cloud-project/terraform && ./create 
-export BASH_AUTH_INVOKE=false
-export BASH_AUTH_REVOKE=true
-cd ${script_dir}/cloud-project/terraform/k8s-pkg-manager && ./create
+cd ${script_dir}/cloud-project/terraform && ./create
