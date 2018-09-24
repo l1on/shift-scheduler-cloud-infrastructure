@@ -9,7 +9,7 @@ source ${script_dir}/lib/names.sh
 gcloud auth login
 gcloud auth application-default login
 
-cd ${script_dir}/cloud-project/terraform && ./create
+cd ${script_dir}/gcp-project/terraform && ./create
 
 gcloud auth application-default revoke -q
 gcloud auth revoke -q

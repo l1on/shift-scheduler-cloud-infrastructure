@@ -12,7 +12,7 @@ provider "google" {
 # Load GCP project name
 ###############################################################################
 data "external" "project" {
-  program = ["jq", "-n", "--arg", "project_id", "$(gcloud projects list --format='csv[no-heading](PROJECT_ID)')", "'{project_id:$project_id}'"]
+  program = ["jq", "-n", "--arg", "project_id", "$(gcloud projects list --format='csv[no-heading](PROJECT_ID)')", "{project_id:$project_id}"]
 }
 
 ###############################################################################

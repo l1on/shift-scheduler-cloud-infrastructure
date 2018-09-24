@@ -8,7 +8,7 @@ source ${script_dir}/lib/names.sh
 
 gcloud auth login
 
-cd ${script_dir}/cloud-project && ./create
-cd ${script_dir}/cloud-project/storage && ./create
+cd ${script_dir}/gcp-project && ./create
+cd ${script_dir}/gcp-project/storage && ./create
 
 gcloud auth revoke -q
