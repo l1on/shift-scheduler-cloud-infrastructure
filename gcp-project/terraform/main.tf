@@ -40,7 +40,8 @@ resource "google_compute_address" "load_balancer_ip" {
     working_dir = "../../../shift-scheduler-app"
 
     command = <<EOF
-      sed 's/[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}/0.0.0.0/' public/_redirects | tee public/_redirects
+      sed 's/[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}/0.0.0.0/' public/_redirects > public/_redirects.bk
+      mv public/_redirects.bk public/_redirects
       git add public/_redirects
       git commit -m "Removed load balancer IP for the cluster."
       git push
