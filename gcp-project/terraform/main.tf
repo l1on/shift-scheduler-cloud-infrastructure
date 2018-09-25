@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
-    bucket  = "shift-scheduler-22270-terraform-state"
+    bucket  = "shift-scheduler-2816-terraform-state"
   }
 }
 
